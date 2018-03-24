@@ -20,13 +20,15 @@ public class StartPars {
         pElements.forEach(pElement -> {
             Element aElement = pElement.child(0);
             String url = aElement.attr("href");
-            String title = aElement.child(0).text();
+            String title = aElement.text();
 
-            articleList.add(new Article(url, title ));
+            for (Element element : elements) {
+                String img = element.attr("src");
+                articleList.add(new Article(url, title ,img ));
+            }
+
     });
-        for (Element element : elements) {
-            System.out.println("https://planetakino.ua" + element.attr("src"));
-        }
+
         articleList.forEach(System.out::println);
 
     }
@@ -35,10 +37,12 @@ public class StartPars {
 class Article {
     private String url;
     private String name;
+    private  String img;
 
-    public Article (String url, String name) {
+    public Article (String url, String name, String img) {
         this.url = url;
         this.name = name;
+        this.img = img;
     }
     public String getName() {
         return name;
@@ -56,11 +60,20 @@ class Article {
         this.url = url;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
                 "url = https://planetakino.ua" + url +
                 ", name = " + name +
+                ", imagine = https://planetakino.ua" + img +
                 '}';
 
     }
