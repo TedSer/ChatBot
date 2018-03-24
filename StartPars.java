@@ -13,6 +13,9 @@ public class StartPars {
 
         Document doc = Jsoup.connect("https://planetakino.ua/lvov/showtimes/").get();
         Elements pElements = doc.getElementsByAttributeValue("class", "movie-title") ;
+        Elements elements = doc.select("img");
+
+
 
         pElements.forEach(pElement -> {
             Element aElement = pElement.child(0);
@@ -21,6 +24,9 @@ public class StartPars {
 
             articleList.add(new Article(url, title ));
     });
+        for (Element element : elements) {
+            System.out.println("https://planetakino.ua" + element.attr("src"));
+        }
         articleList.forEach(System.out::println);
 
     }
@@ -53,7 +59,7 @@ class Article {
     @Override
     public String toString() {
         return "Article{" +
-                "url = " + url +
+                "url = https://planetakino.ua" + url +
                 ", name = " + name +
                 '}';
 
