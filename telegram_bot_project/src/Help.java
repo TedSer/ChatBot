@@ -9,7 +9,9 @@ public class Help extends Bot {
         Message msg = e.getMessage();
         String txt = msg.getText();
         if (txt.equals("/help")){
-            sendMsg(msg, "This is all commands: \n /start -- Greeting with bot \n /help -- the same page");
+            sendMsg(msg, "Я можу розповідати про різні події у Львові. Можу розвоповісти де поїсти, на який фільм"+
+                    " сходити, про спортивні заходи та на яку виставу піти у театр. Щоб побачити інформацію, просто" +
+                    " напишіть <Куди сходити>");
         }
     }
 

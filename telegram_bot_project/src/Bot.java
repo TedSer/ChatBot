@@ -1,4 +1,3 @@
-
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
@@ -14,17 +13,30 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update e) {
         Message msg = e.getMessage();
         String txt = msg.getText();
-        String pattern = "[^/start][^/help]";
-        Pattern p = Pattern.compile(pattern);
+        Pattern p = Pattern.compile("/help|кіно|\\.+кіно\\.|\\.+кіно|кіно+\\.|фільм|\\.+робити\\.|робити|\\." +
+                "+робити|робити+\\.|Куди піти\\.|куди піти\\.|\\.куди піти\\.|\\.куди піти|Куди піти|куди піти|куди " +
+                "сходити|куди сходити\\.|\\.куди сходити\\.|\\.куди сходити|\\.+поїсти\\.|поїсти|\\.+поїсти|поїсти+" +
+                "\\.|\\.+їсти|\\.+їсти+\\.|їсти+\\.|їсти|Привіт|привіт|\\.+привіт|\\.+привіт+\\.|привіт\\.|Привіт\\.");
         Matcher m = p.matcher(txt);
         Start srt = new Start();
         Help hlp = new Help();
+        List lst = new List();
+        Food fd = new Food();
+        Cinema cnm = new Cinema();
+
+
         if (m.find()){
-            sendMsg(msg, "Unknown command");
+
+            srt.startCommand(e);
+            hlp.helpCommand(e);
+            lst.listCommand(e);
+            fd.foodCommand(e);
+            cnm.cinemaCommand(e);
 
         } else {
-            srt.stardcommand(e);
-            hlp.helpCommand(e);
+
+            sendMsg(msg, "Unknown command");
+
         }
     }
     @Override
@@ -36,11 +48,11 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "НАРОД, ТУТ МАЄ БУТИ ВАЖ ТОКЕН НА БОТА, ПРОГУГЛИТЬ ЯК ЦЕ РОПИТИ, ЩОБ ВИ МОГЛИ ТЕСТЕТИ НА ВАШИХ КОМПАХ!!!";
+        return "542267185:AAH5bzZJEvo8g8QEsE74vcEtN1X28CAgiwU";
     }
 
 
-    @SuppressWarnings("deprecation")
+
     private void sendMsg(Message msg, String text) {
         SendMessage s = new SendMessage();
         s.setChatId(msg.getChatId());

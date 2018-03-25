@@ -6,17 +6,18 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Start  extends Bot{
+public class Cinema extends Bot {
 
-    public void startCommand(Update e) {
+    public void cinemaCommand(Update e) {
         Message msg = e.getMessage();
         String txt = msg.getText();
-        Pattern p = Pattern.compile("Привіт|привіт|\\.+привіт|\\.+привіт+\\.|привіт\\.|Привіт\\.");
+        Pattern p = Pattern.compile("\\.+кіно\\.|кіно|\\.+кіно|кіно+\\.|фільм");
         Matcher m = p.matcher(txt);
 
         if (m.find()){
-            sendMsg(msg, "Привіт! Це тестовий бот, щоб дізнатись більше, пропишіть /help");
+            sendMsg(msg, "Hear will be list of cinema seance");
         } else {
+
 
         }
     }
@@ -31,4 +32,5 @@ public class Start  extends Bot{
             e.printStackTrace();
         }
     }
+
 }
