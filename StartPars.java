@@ -22,10 +22,7 @@ public class StartPars {
             String url = aElement.attr("href");
             String title = aElement.text();
 
-            for (Element element : elements) {
-                String img = element.attr("src");
-                articleList.add(new Article(url, title ,img ));
-            }
+            articleList.add(new Article(url, title ));
 
     });
 
@@ -37,12 +34,10 @@ public class StartPars {
 class Article {
     private String url;
     private String name;
-    private  String img;
 
-    public Article (String url, String name, String img) {
+    public Article (String url, String name) {
         this.url = url;
         this.name = name;
-        this.img = img;
     }
     public String getName() {
         return name;
@@ -60,20 +55,12 @@ class Article {
         this.url = url;
     }
 
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
 
     @Override
     public String toString() {
         return "Article{" +
                 "url = https://planetakino.ua" + url +
                 ", name = " + name +
-                ", imagine = https://planetakino.ua" + img +
                 '}';
 
     }
