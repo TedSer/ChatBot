@@ -3,6 +3,8 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +25,7 @@ public class Bot extends TelegramLongPollingBot {
         List lst = new List();
         Food fd = new Food();
         Cinema cnm = new Cinema();
+        StartPars strp = new StartPars();
 
 
         if (m.find()){
@@ -32,6 +35,10 @@ public class Bot extends TelegramLongPollingBot {
             lst.listCommand(e);
             fd.foodCommand(e);
             cnm.cinemaCommand(e);
+
+
+
+
 
         } else {
 

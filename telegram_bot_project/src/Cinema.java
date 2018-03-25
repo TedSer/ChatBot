@@ -3,23 +3,37 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Cinema extends Bot {
 
-    public void cinemaCommand(Update e) {
+    public void cinemaCommand(Update e){
         Message msg = e.getMessage();
         String txt = msg.getText();
         Pattern p = Pattern.compile("\\.+кіно\\.|кіно|\\.+кіно|кіно+\\.|фільм");
         Matcher m = p.matcher(txt);
+        StartPars strp = new StartPars();
+
+
 
         if (m.find()){
-            sendMsg(msg, "Hear will be list of cinema seance");
+            try{
+                strp.parce(e);
+            } catch (IOException e1){
+                System.out.println("Дупа");
+            }
+
+
         } else {
 
 
         }
+
+
+
+
     }
 
     private void sendMsg(Message msg, String text) {

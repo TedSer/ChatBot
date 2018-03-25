@@ -14,6 +14,8 @@ public class List extends Bot {
         Pattern p = Pattern.compile("\\.+робити\\.|робити|\\.+робити|робити+\\.|Куди піти\\.|куди піти\\.|\\.куди піти\\.|\\.куди піти|Куди піти|куди піти|куди сходити|куди сходити\\.|\\.куди сходити\\.|\\.куди сходити");
         Matcher m = p.matcher(txt);
 
+
+
         if (m.find()){
             sendMsg(msg, "Hear will be list");
         } else {
