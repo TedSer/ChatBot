@@ -1,5 +1,8 @@
+import org.apache.maven.doxia.logging.Log;
+import org.telegram.telegrambots.api.methods.send.SendLocation;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.api.objects.Location;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -11,6 +14,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,25 +29,30 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        Message msg = update.getMessage();
-        String txt = msg.getText();
-        Pattern p = Pattern.compile("/help|кіно|\\.+кіно\\.|\\.+кіно|кіно+\\.|фільм|\\.+робити\\.|робити|\\." +
+
+
+
+
+
+        String p = "/help|кіно|\\.+кіно\\.|\\.+кіно|кіно+\\.|фільм|\\.+робити\\.|робити|\\." +
                 "+робити|робити+\\.|Куди піти\\.|куди піти\\.|\\.куди піти\\.|\\.куди піти|Куди піти|куди піти|куди " +
                 "сходити|куди сходити\\.|\\.куди сходити\\.|\\.куди сходити|\\.+поїсти\\.|поїсти|\\.+поїсти|поїсти+" +
                 "\\.|\\.+їсти|\\.+їсти+\\.|їсти+\\.|їсти|Привіт|привіт|\\.+привіт|\\.+привіт+\\.|привіт\\.|Привіт\\.|" +
-                "Multiplex|Кінопалац");
-        Matcher m = p.matcher(txt);
+                "Multiplex|Кінопалац|Multiplex Кульпарківська 226 А|Копернік|Театртальна|ім. Довженка|/start|update_msg_text|Update message text";
+        Pattern pattern = Pattern.compile(p);
+        Matcher m = pattern.matcher(update.getMessage().getText());
+        Matcher m2 = pattern.matcher(update.getMessage().getText());
+        //problem in Matcher!!!
         Start srt = new Start();
         Help hlp = new Help();
         ListOf lst = new ListOf();
         Food fd = new Food();
         Cinema cnm = new Cinema();
-
-
-
+        button btn = new button();
 
 
         if (m.find()){
+
 
             srt.startCommand(update);
             hlp.helpCommand(update);
@@ -52,11 +61,14 @@ public class Bot extends TelegramLongPollingBot {
             cnm.cinemaCommand(update);
 
 
+
+
+
         } else {
 
-            sendMsg(msg, "Чуваче, ти щось не те написав, можливо тобі потрбна допомога?");
+            sendMsg(update.getMessage(), "Чуваче, ти щось не те написав, можливо тобі потрбна допомога?");
             SendMessage message = new SendMessage()
-                    .setChatId(msg.getChatId())
+                    .setChatId(update.getMessage().getChatId())
                     .setText("Нажміть на цю кнопку, щоб дізнатись більше про функціонал↓↓↓↓↓↓↓↓↓↓↓");
             ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
             List<KeyboardRow> keyboard = new ArrayList<>();
@@ -74,8 +86,8 @@ public class Bot extends TelegramLongPollingBot {
 
 
         }
-    }
 
+    }
 
 
 
@@ -102,6 +114,21 @@ public class Bot extends TelegramLongPollingBot {
         } catch (TelegramApiException e){
             e.printStackTrace();
         }
+    }
+
+
+
+    private void sendLocation(Message msg, Location location, Float longitude, Float latitude) {
+        SendLocation sendLoc = new SendLocation();
+        sendLoc.setChatId(msg.getChatId());
+        sendLoc.setLatitude(latitude);
+        sendLoc.setLongitude(longitude);
+        try {
+            sendLocation(sendLoc);
+        } catch (TelegramApiException e1){
+            e1.printStackTrace();
+        }
+
     }
 
 

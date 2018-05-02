@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 
 public class Start  extends Bot{
 
-    public void startCommand(Update e) {
-        Message msg = e.getMessage();
+    public void startCommand(Update update) {
+        Message msg = update.getMessage();
         String txt = msg.getText();
         Pattern p = Pattern.compile("Привіт|привіт|\\.+привіт|\\.+привіт+\\.|привіт\\.|Привіт\\.");
         Matcher m = p.matcher(txt);

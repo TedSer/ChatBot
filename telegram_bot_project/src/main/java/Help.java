@@ -5,8 +5,8 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 public class Help extends Bot {
 
-    public void helpCommand(Update e) {
-        Message msg = e.getMessage();
+    public void helpCommand(Update update) {
+        Message msg = update.getMessage();
         String txt = msg.getText();
         if (txt.equals("/help")){
             sendMsg(msg, "Я можу розповідати про різні події у Львові. Можу розвоповісти де поїсти, на який фільм"+

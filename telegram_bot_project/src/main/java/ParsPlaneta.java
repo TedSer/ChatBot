@@ -13,8 +13,8 @@ import java.util.List;
 
 public class ParsPlaneta extends Cinema {
 
-    public  void parce(Update e) throws IOException {
-        Message msg = e.getMessage();
+    public  void parce(Update update) throws IOException {
+        Message msg = update.getMessage();
         String txt = msg.getText();
 
 

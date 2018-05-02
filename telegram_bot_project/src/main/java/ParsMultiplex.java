@@ -11,45 +11,37 @@ import java.io.IOException;
 
 public class ParsMultiplex extends Cinema {
 
-    public  void parce(Update e) throws IOException {
-        Message msg = e.getMessage();
+    public  void parce(Update update) throws IOException {
+        Message msg = update.getMessage();
         String txt = msg.getText();
 
 
 
         Document docMultiplex = Jsoup.connect("https://multiplex.ua/ua/cinema/lviv/victoriagardens").get();
         Elements aElements = docMultiplex.getElementsByAttributeValue("class", "info");
+        Elements dElements = docMultiplex.getElementsByClass("film");
+
+
+
+
+dElements.forEach(dElement -> {
+
+    aElements.forEach(aElement ->{
+        Element cElement = aElement.child(0);
+        String urlMultiplex = cElement.attr("href");
+        String titleMultiplex = cElement.text();
+
+        sendMsg(msg, titleMultiplex + " " + "https://multiplex.ua" + urlMultiplex);
+    });
+
+});
 
 
 
 
 
-//        pElements.forEach(pElement -> {
-//            Element bElement = pElement.child(0);
-//            String urlPlaneta = bElement.attr("href");
-//            String titlePlaneta = bElement.text();
-//
-//            sendMsg(msg, titlePlaneta + "https://planetakino.ua" + urlPlaneta);
-//
-//
-//            });
 
 
-        aElements.forEach(aElement ->{
-            Element cElement = aElement.child(0);
-            String urlMultiplex = cElement.attr("href");
-            String titleMultiplex = cElement.text();
-
-            sendMsg(msg, titleMultiplex + " " + "https://multiplex.ua" + urlMultiplex);
-        });
-
-//        aElements.forEach(aElement ->{
-//            Element cElement = aElement.child(0);
-//            String title = cElement.child(0).text();
-//
-//            sendMsg(msg, title);
-//        });
-//
 
 
 

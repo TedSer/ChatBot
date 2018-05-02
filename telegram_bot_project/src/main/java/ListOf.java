@@ -8,10 +8,12 @@ import java.util.regex.Pattern;
 
 public class ListOf extends Bot {
 
-    public void listCommand(Update e) {
-        Message msg = e.getMessage();
+    public void listCommand(Update update) {
+        Message msg = update.getMessage();
         String txt = msg.getText();
-        Pattern p = Pattern.compile("\\.+робити\\.|робити|\\.+робити|робити+\\.|Куди піти\\.|куди піти\\.|\\.куди піти\\.|\\.куди піти|Куди піти|куди піти|куди сходити|куди сходити\\.|\\.куди сходити\\.|\\.куди сходити");
+        Pattern p = Pattern.compile("\\.+робити\\.|робити|\\.+робити|робити+\\.|Куди піти\\.|куди піти\\." +
+                "|\\.куди піти\\.|\\.куди піти|Куди піти|куди піти|куди сходити|куди сходити\\.|\\.куди сходити\\.|" +
+                "\\.куди сходити|Куди сходити\\.");
         Matcher m = p.matcher(txt);
 
 

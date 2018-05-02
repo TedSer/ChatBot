@@ -8,10 +8,11 @@ import java.util.regex.Pattern;
 
 public class Food extends Bot {
 
-    public void foodCommand(Update e) {
-        Message msg = e.getMessage();
+    public void foodCommand(Update update) {
+        Message msg = update.getMessage();
         String txt = msg.getText();
-        Pattern p = Pattern.compile("\\.+поїсти\\.|поїсти|\\.+поїсти|поїсти+\\.|\\.+їсти|\\.+їсти+\\.|їсти+\\.|їсти");
+        Pattern p = Pattern.compile("\\.+поїсти\\.|поїсти|\\.+поїсти|поїсти+\\.|\\.+їсти|\\.+їсти+\\.|їсти+\\.|їсти|" +
+                "\\.жерти|жерти\\.|\\.жерти\\.");
         Matcher m = p.matcher(txt);
 
         if (m.find()){

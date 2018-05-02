@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/../telegrambots-3.6-jar-with-dependencies.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../telegrambots-3.6-jar-with-dependencies.jar!/" />
+    </SOURCES>
   </library>
 </component>
