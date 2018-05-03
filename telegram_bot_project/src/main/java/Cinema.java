@@ -4,7 +4,9 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Location;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
@@ -31,7 +33,6 @@ public class Cinema extends Bot {
         ParsMultiplex parsMultiplex = new ParsMultiplex();
         ParsKinopalace parsKinopalace = new ParsKinopalace();
         MultiplexLocation multiplexLocation = new MultiplexLocation();
-
 
 
 
@@ -87,53 +88,37 @@ public class Cinema extends Bot {
 
         }
 
-
-        if (txt.equals("Кінопалац")) {
-            try {
-                parsKinopalace.parce(update);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-
-
-            SendMessage message = new SendMessage()
-                    .setChatId(msg.getChatId())
-                    .setText("Виберіть локацію кінотеатру");
-
-
-            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-            List<KeyboardRow> keyboard = new ArrayList<>();
-            KeyboardRow row = new KeyboardRow();
-            row.add("ім. Довженка");
-            row.add("Театртальна");
-            row.add("Копернік");
-            keyboard.add(row);
-            keyboardMarkup.setKeyboard(keyboard);
-            message.setReplyMarkup(keyboardMarkup);
-
-            try {
-                execute(message);
-            } catch (TelegramApiException e2) {
-                e2.printStackTrace();
-            }
-
-        }
-
-
-        if (txt.equals("ще")) {
-            try {
-                parsKinopalace.parceNext(update);
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-        if (txt.equals("ще")) {
-            try {
-                parsKinopalace.parceNext2(update);
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
+//
+//        if (txt.equals("Кінопалац")) {
+//            try {
+//                parsKinopalace.parce(update);
+//            } catch (IOException e1) {
+//                e1.printStackTrace();
+//            }
+//
+//
+//            SendMessage message = new SendMessage()
+//                    .setChatId(msg.getChatId())
+//                    .setText("Виберіть локацію кінотеатру");
+//
+//
+//            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+//            List<KeyboardRow> keyboard = new ArrayList<>();
+//            KeyboardRow row = new KeyboardRow();
+//            row.add("ім. Довженка");
+//            row.add("Театртальна");
+//            row.add("Копернік");
+//            keyboard.add(row);
+//            keyboardMarkup.setKeyboard(keyboard);
+//            message.setReplyMarkup(keyboardMarkup);
+//
+//            try {
+//                execute(message);
+//            } catch (TelegramApiException e2) {
+//                e2.printStackTrace();
+//            }
+//
+//        }
 
 
         if (txt.equals("ім. Довженка")){
@@ -181,7 +166,13 @@ public class Cinema extends Bot {
                     e2.printStackTrace();
                 }
 
+
+
+
+
+
         }
+
 
     }
 
