@@ -10,7 +10,7 @@ import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
-public class button extends Bot {
+public class Button extends Bot {
 
     public void button(Update update) {
 
@@ -48,7 +48,6 @@ public class button extends Bot {
             long message_id = update.getCallbackQuery().getMessage().getMessageId();
             long chat_id = update.getCallbackQuery().getMessage().getChatId();
 
-            System.out.println(call_data);
 
             if (call_data.equals("update_msg_text")) {
                 String answer = "Updated message text";
@@ -58,7 +57,6 @@ public class button extends Bot {
                         .setText(answer);
                 try {
                     execute(new_message);
-                    System.out.println(new_message);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());

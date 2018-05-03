@@ -22,15 +22,17 @@ public class ParsPlaneta extends Cinema {
         Document docPlaneta = Jsoup.connect("https://planetakino.ua/lvov/showtimes").get();
         Elements pElements = docPlaneta.getElementsByAttributeValue("class", "movie-title");
 
-        pElements.forEach(pElement -> {
+        for (Element pElement : pElements.subList(0,5)) {
             Element bElement = pElement.child(0);
             String urlPlaneta = bElement.attr("href");
             String titlePlaneta = bElement.text();
 
             sendMsg(msg, titlePlaneta + "https://planetakino.ua" + urlPlaneta);
+        }
 
 
-            });
+
+            }
 
 //        aElements.forEach(aElement ->{
 //            Element cElement = aElement.child(0);
@@ -45,7 +47,6 @@ public class ParsPlaneta extends Cinema {
 //            sendMsg(msg, "https://planetakino.ua" + element.attr("src"));
 //        }
 
-    }
 
     private void sendMsg(Message msg, String text) {
         SendMessage s = new SendMessage();

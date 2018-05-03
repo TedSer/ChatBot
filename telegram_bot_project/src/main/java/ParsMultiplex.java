@@ -22,29 +22,13 @@ public class ParsMultiplex extends Cinema {
         Elements dElements = docMultiplex.getElementsByClass("film");
 
 
+        for (Element aElement : aElements.subList(0,5)) {
+            Element cElement = aElement.child(0);
+            String urlMultiplex = cElement.attr("href");
+            String titleMultiplex = cElement.text();
 
-
-dElements.forEach(dElement -> {
-
-    aElements.forEach(aElement ->{
-        Element cElement = aElement.child(0);
-        String urlMultiplex = cElement.attr("href");
-        String titleMultiplex = cElement.text();
-
-        sendMsg(msg, titleMultiplex + " " + "https://multiplex.ua" + urlMultiplex);
-    });
-
-});
-
-
-
-
-
-
-
-
-
-
+            sendMsg(msg, titleMultiplex + " " + "https://multiplex.ua" + urlMultiplex);
+        }
 
 
 //        for (Element element : elements) {
@@ -53,12 +37,6 @@ dElements.forEach(dElement -> {
 //        }
 
     }
-
-
-
-
-
-
 
 
 

@@ -35,6 +35,7 @@ public class Cinema extends Bot {
 
 
 
+
         if (txt.equals("Multiplex")){
 
             sendMsg(msg, "https://maps.google.com/maps?ll=49.806232,23.981953&z=15&t=m&hl=en-US&gl" +
@@ -119,6 +120,22 @@ public class Cinema extends Bot {
         }
 
 
+        if (txt.equals("ще")) {
+            try {
+                parsKinopalace.parceNext(update);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        if (txt.equals("ще")) {
+            try {
+                parsKinopalace.parceNext2(update);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+
         if (txt.equals("ім. Довженка")){
             sendMsg(msg, "https://www.google.com.ua/maps/place/%D0%9A%D1%96%D0%BD%D0%BE%D0%BF%D0%B0%D0%BB%D0%B" +
                     "0%D1%86+%D1%96%D0%BC.+%D0%94%D0%BE%D0%B2%D0%B6%D0%B5%D0%BD%D0%BA%D0%B0/@49.7901703,23.997616,12z" +
@@ -164,13 +181,7 @@ public class Cinema extends Bot {
                     e2.printStackTrace();
                 }
 
-
-
-
-
-
         }
-
 
     }
 

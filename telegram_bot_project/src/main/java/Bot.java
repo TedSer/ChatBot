@@ -1,27 +1,18 @@
-import org.apache.maven.doxia.logging.Log;
 import org.telegram.telegrambots.api.methods.send.SendLocation;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.Location;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.lang.Math.toIntExact;
 
 
 public class Bot extends TelegramLongPollingBot {
@@ -31,24 +22,25 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
 
 
-
+        Button btn = new Button();
+        btn.button(update);
 
 
         String p = "/help|кіно|\\.+кіно\\.|\\.+кіно|кіно+\\.|фільм|\\.+робити\\.|робити|\\." +
                 "+робити|робити+\\.|Куди піти\\.|куди піти\\.|\\.куди піти\\.|\\.куди піти|Куди піти|куди піти|куди " +
                 "сходити|куди сходити\\.|\\.куди сходити\\.|\\.куди сходити|\\.+поїсти\\.|поїсти|\\.+поїсти|поїсти+" +
                 "\\.|\\.+їсти|\\.+їсти+\\.|їсти+\\.|їсти|Привіт|привіт|\\.+привіт|\\.+привіт+\\.|привіт\\.|Привіт\\.|" +
-                "Multiplex|Кінопалац|Multiplex Кульпарківська 226 А|Копернік|Театртальна|ім. Довженка|/start|update_msg_text|Update message text";
+                "Multiplex|Кінопалац|Multiplex Кульпарківська 226 А|Копернік|Театртальна|ім. Довженка|/start|update_msg_text|Update message text|ще";
         Pattern pattern = Pattern.compile(p);
         Matcher m = pattern.matcher(update.getMessage().getText());
-        Matcher m2 = pattern.matcher(update.getMessage().getText());
+        Matcher m2= pattern.matcher(update.getMessage().getText());
         //problem in Matcher!!!
         Start srt = new Start();
         Help hlp = new Help();
         ListOf lst = new ListOf();
         Food fd = new Food();
         Cinema cnm = new Cinema();
-        button btn = new button();
+
 
 
         if (m.find()){
@@ -91,7 +83,6 @@ public class Bot extends TelegramLongPollingBot {
 
 
 
-
     @Override
     public String getBotUsername() {
         return "Test Bot";
@@ -101,7 +92,7 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "542267185:AAH5bzZJEvo8g8QEsE74vcEtN1X28CAgiwU";
+        return "586717992:AAEpMVfRb5pfZiIHNIlOOB0lR_99_d9XINo";
     }
 
     private void sendMsg(Message msg, String text) {
