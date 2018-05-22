@@ -1,3 +1,7 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.telegram.telegrambots.api.methods.send.SendLocation;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 
@@ -21,129 +25,23 @@ import java.util.regex.Pattern;
 
 public class Cinema extends Bot {
 
-
-
-
-    public void cinemaCommand(Update update){
+    public void cinemaCommand(Update update) {
         Message msg = update.getMessage();
         String txt = msg.getText();
-        Pattern p = Pattern.compile("\\.+кіно\\.|кіно|\\.+кіно|кіно+\\.|фільм");
+        Pattern p = Pattern.compile("\\.+\\sкіно\\s+\\.|кіно|\\.+\\sкіно|кіно\\s+\\.|фільм");
         Matcher m = p.matcher(txt);
-        ParsPlaneta parsPlaneta = new ParsPlaneta();
-        ParsMultiplex parsMultiplex = new ParsMultiplex();
-        ParsKinopalace parsKinopalace = new ParsKinopalace();
-        MultiplexLocation multiplexLocation = new MultiplexLocation();
+        ParceKinopalaceButtons parceKinopalaceButtons = new ParceKinopalaceButtons();
+        ParcePlanetaButtons parcePlanetaButtons = new ParcePlanetaButtons();
+        ParceMultiplexButtons parceMultiplexButtons = new ParceMultiplexButtons();
 
 
 
-
-        if (txt.equals("Multiplex")){
-
-            sendMsg(msg, "https://maps.google.com/maps?ll=49.806232,23.981953&z=15&t=m&hl=en-US&gl" +
-                    "=US&mapclient=embed&cid=11981398925180740473");
-
-            SendMessage message = new SendMessage()
-                    .setChatId(msg.getChatId())
-                    .setText("Виберіть локацію кінотеатру");
-
-
-            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-            List<KeyboardRow> keyboard = new ArrayList<>();
-            KeyboardRow row = new KeyboardRow();
-            row.add("Multiplex Кульпарківська 226 А");
-            keyboard.add(row);
-            keyboardMarkup.setKeyboard(keyboard);
-            message.setReplyMarkup(keyboardMarkup);
-
-            try {
-                execute(message);
-            } catch (TelegramApiException e2) {
-                e2.printStackTrace();
-            }
-
-
+        if (txt.equals("я задовбався")){
+            sendMsg(msg, "Йди спати, придурок!!!");
         }
 
-
-        if (txt.equals("Планета кіно")) {
-
-            try {
-                parsPlaneta.parce(update);
-            } catch (IOException e1){
-                e1.printStackTrace();
-            }
-
-
-        }
-
-
-                if (txt.equals("Multiplex Кульпарківська 226 А")){
-                    try{
-                        parsMultiplex.parce(update);
-                    } catch (IOException e1){
-                        e1.printStackTrace();
-                    }
-
-
-
-        }
-
-//
-//        if (txt.equals("Кінопалац")) {
-//            try {
-//                parsKinopalace.parce(update);
-//            } catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
-//
-//
-//            SendMessage message = new SendMessage()
-//                    .setChatId(msg.getChatId())
-//                    .setText("Виберіть локацію кінотеатру");
-//
-//
-//            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-//            List<KeyboardRow> keyboard = new ArrayList<>();
-//            KeyboardRow row = new KeyboardRow();
-//            row.add("ім. Довженка");
-//            row.add("Театртальна");
-//            row.add("Копернік");
-//            keyboard.add(row);
-//            keyboardMarkup.setKeyboard(keyboard);
-//            message.setReplyMarkup(keyboardMarkup);
-//
-//            try {
-//                execute(message);
-//            } catch (TelegramApiException e2) {
-//                e2.printStackTrace();
-//            }
-//
-//        }
-
-
-        if (txt.equals("ім. Довженка")){
-            sendMsg(msg, "https://www.google.com.ua/maps/place/%D0%9A%D1%96%D0%BD%D0%BE%D0%BF%D0%B0%D0%BB%D0%B" +
-                    "0%D1%86+%D1%96%D0%BC.+%D0%94%D0%BE%D0%B2%D0%B6%D0%B5%D0%BD%D0%BA%D0%B0/@49.7901703,23.997616,12z" +
-                    "/data=!4m8!1m2!2m1!1z0LrRltC90L7Qv9Cw0LvQsNGG!3m4!1s0x473ae86d3aa07edd:0x225db12979ffb78a!8m2!" +
-                    "3d49.7950917!4d24.0577198");
-        }
-
-
-        if (txt.equals("Театртальна")){
-            sendMsg(msg, "https://www.google.com/maps/place/%D0%9A%D1%96%D0%BD%D0%BE%D0%BF%D0%B0%D0%BB%D0%B0%D" +
-                    "1%86/@49.7901703,23.997616,12z/data=!4m8!1m2!2m1!1z0LrRltC90L7Qv9Cw0LvQsNGG!3m4!1s0x473add72950" +
-                    "f6e8d:0x6cf545e48e348c1f!8m2!3d49.8432393!4d24.0287981");
-        }
-
-        if (txt.equals("Копернік")) {
-            sendLocation(msg,  49.838769f, 24.027179f);
-        }
-
-
+// Creating a buttons
         if (m.find()) {
-
-
-
 
             SendMessage message = new SendMessage()
                     .setChatId(msg.getChatId())
@@ -166,12 +64,126 @@ public class Cinema extends Bot {
                     e2.printStackTrace();
                 }
 
+        }
+
+//binding buttons
+        if (txt.equals("Кінопалац")) {
+
+            try {
+                parceKinopalaceButtons.button(update);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+//creating key for more
+            long chat_id = update.getMessage().getChatId();
+            SendMessage message_for_key = new SendMessage() // Create a message object object
+                    .setChatId(chat_id)
+                    .setText("--------");
+            InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+            List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+            List<InlineKeyboardButton> rowInline = new ArrayList<>();
+
+            rowInline.add(new InlineKeyboardButton().setText("Ще").setCallbackData("morePalace"));
+            // Set the keyboard to the markup
+            rowsInline.add(rowInline);
+            // Add it to the message
+            markupInline.setKeyboard(rowsInline);
+            message_for_key.setReplyMarkup(markupInline);
+            try {
+                execute(message_for_key); // Sending our message object to user
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (txt.equals("Планета кіно")) {
+
+            try {
+                parcePlanetaButtons.button(update);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
 
+            long chat_id = update.getMessage().getChatId();
+            SendMessage message_for_key = new SendMessage() // Create a message object object
+                    .setChatId(chat_id)
+                    .setText("--------");
+            InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+            List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+            List<InlineKeyboardButton> rowInline = new ArrayList<>();
 
+            rowInline.add(new InlineKeyboardButton().setText("Ще").setCallbackData("morePlaneta"));
+            // Set the keyboard to the markup
+            rowsInline.add(rowInline);
+            // Add it to the message
+            markupInline.setKeyboard(rowsInline);
+            message_for_key.setReplyMarkup(markupInline);
+            try {
+                execute(message_for_key); // Sending our message object to user
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        if (txt.equals("Multiplex")) {
+
+            try {
+                parceMultiplexButtons.button(update);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            long chat_id = update.getMessage().getChatId();
+            SendMessage message_for_key = new SendMessage() // Create a message object object
+                    .setChatId(chat_id)
+                    .setText("--------");
+            InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+            List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+            List<InlineKeyboardButton> rowInline = new ArrayList<>();
+
+            rowInline.add(new InlineKeyboardButton().setText("Ще").setCallbackData("moreMultiplex"));
+            // Set the keyboard to the markup
+            rowsInline.add(rowInline);
+            // Add it to the message
+            markupInline.setKeyboard(rowsInline);
+            message_for_key.setReplyMarkup(markupInline);
+            try {
+                execute(message_for_key); // Sending our message object to user
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
 
 
         }
+
+        if (txt.equals("Більше фільмів з планети кіно")) {
+            try {
+                parcePlanetaButtons.moreButtons(update);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (txt.equals("Більше фільмів з кінопалацу")) {
+            try {
+                parceKinopalaceButtons.moreButtons(update);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        if (txt.equals("Більше фільмів з Multiplex")) {
+//            try {
+//                parceMultiplexButtons.moreButtons(update);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
 
 
     }

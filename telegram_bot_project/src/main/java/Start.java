@@ -27,7 +27,7 @@ public class Start  extends Bot{
         }
     }
 
-    private synchronized void setButtoms(SendMessage sendMessage) {
+    public synchronized void setButtoms(SendMessage sendMessage) {
 
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
