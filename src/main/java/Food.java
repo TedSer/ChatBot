@@ -32,12 +32,12 @@ public class Food extends Bot {
         FoodParce foodParce = new FoodParce();
 
 
-        if (m.find()){
+        if (m.find()) {
             sendMsg(msg, "Проголодався? Окей, ти хочеш список найкращих закладів міста," +
                     " чи ті заклади, що ближче до тебе?");
         }
 
-        if (mForClose.find()){
+        if (mForClose.find()) {
             SendMessage message = new SendMessage()
                     .setChatId(msg.getChatId())
                     .setText("Виберіть район");
@@ -61,7 +61,7 @@ public class Food extends Bot {
             }
         }
 
-        if (mForBest.find()){
+        if (mForBest.find()) {
             try {
                 foodParce.parceBest(update);
             } catch (IOException e) {
@@ -91,22 +91,18 @@ public class Food extends Bot {
 
 
 
-        }
-
-
-
-
-
-
-    private void sendMsg(Message msg, String text) {
-        SendMessage s = new SendMessage();
-        s.setChatId(msg.getChatId());
-        s.setText(text);
-        try {
-            sendMessage(s);
-        } catch (TelegramApiException e){
-            e.printStackTrace();
+    }
+        private void sendMsg (Message msg, String text){
+            SendMessage s = new SendMessage();
+            s.setChatId(msg.getChatId());
+            s.setText(text);
+            try {
+                sendMessage(s);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-}
+
+

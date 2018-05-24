@@ -52,7 +52,6 @@ public class ParceMultiplexButtons extends Cinema {
         Elements aElements = docMultiplex.getElementsByAttributeValue("class", "info");
 
 
-
         for (Element aElement : aElements.subList(6, 13)) {
             Element cElement = aElement.child(0);
             String urlMultiplex = cElement.attr("href");
@@ -74,6 +73,26 @@ public class ParceMultiplexButtons extends Cinema {
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
+        }
+
+        long chat_id = update.getCallbackQuery().getMessage().getChatId();
+        SendMessage message_for_key = new SendMessage() // Create a message object object
+                .setChatId(chat_id)
+                .setText("--------");
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        List<InlineKeyboardButton> rowInline = new ArrayList<>();
+
+        rowInline.add(new InlineKeyboardButton().setText("Ще").setCallbackData("moreMultiplex"));
+        // Set the keyboard to the markup
+        rowsInline.add(rowInline);
+        // Add it to the message
+        markupInline.setKeyboard(rowsInline);
+        message_for_key.setReplyMarkup(markupInline);
+        try {
+            execute(message_for_key); // Sending our message object to user
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 

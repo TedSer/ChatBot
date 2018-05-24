@@ -22,32 +22,13 @@ import static java.lang.Math.toIntExact;
 public class Bot extends TelegramLongPollingBot {
 
 
-    public int getPages() {
-        return pages;
-    }
 
-    public void setPages(int pages) {
-        this.pages = pages;
-    }
 
-    public int pages;
+    private int page = 0;
 
 
     @Override
     public void onUpdateReceived(Update update) {
-
-
-//            if (update.getCallbackQuery() != null) {
-//                ParceKinopalaceButtons btn = new ParceKinopalaceButtons();
-//                try {
-//                    btn.button(update);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-
-
 
 // ВИРІШЕННЯ ЕКСЕПШИНУ!!!
         if (update.getMessage() == null) {   //місце для прописування методів колбеку кнопок, інакши викидає NPE
@@ -55,6 +36,7 @@ public class Bot extends TelegramLongPollingBot {
                 String call_data = update.getCallbackQuery().getData();
                 long message_id = update.getCallbackQuery().getMessage().getMessageId();
                 long chat_id = update.getCallbackQuery().getMessage().getChatId();
+                ParsTeatrKurbasa parsTeatrKurbasa = new ParsTeatrKurbasa();
 
                 if (call_data.equals("morePalace")) {
                     ParceKinopalaceButtons parceKinopalaceButtons = new ParceKinopalaceButtons();
@@ -77,6 +59,8 @@ public class Bot extends TelegramLongPollingBot {
                 }
 
                 if (call_data.equals("morePlaneta")) {
+
+                    page = page + 5 ;
                     ParcePlanetaButtons parcePlanetaButtons = new ParcePlanetaButtons();
                     try {
                         parcePlanetaButtons.moreButtons(update);
@@ -95,6 +79,51 @@ public class Bot extends TelegramLongPollingBot {
                     }
                 }
 
+                if (call_data.equals("moreKurbas")) {
+                    try {
+                        parsTeatrKurbasa.parceMore(update);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (call_data.equals("morePuppets")) {
+                   ParsPuppetShow parsPuppetShow = new ParsPuppetShow();
+                    try {
+                        parsPuppetShow.parceMore(update);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (call_data.equals("morePuppetsAndHuman")) {
+                    ParsHumanAndPuppet parsHumanAndPuppet = new ParsHumanAndPuppet();
+                    try {
+                        parsHumanAndPuppet.parceMore(update);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (call_data.equals("moreZankovetska")) {
+                    ParsZankovecka parsZankovecka = new ParsZankovecka();
+                    try {
+                        parsTeatrKurbasa.parceMore(update);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (call_data.equals("moreOpera")) {
+                    ParsOpera parsOpera = new ParsOpera();
+                    try {
+                        parsOpera.parceMore(update);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
             }
         } else {
 
@@ -106,7 +135,8 @@ public class Bot extends TelegramLongPollingBot {
                     "Update message text|Планета кіно|ще|ближчі|\\.ближ|ближ\\.|\\.ближ\\.|найкращі|\\.найкр|найкр\\." +
                     "|\\.найкр\\.|я задовбався|\\.Кіно\\.|Кіно|\\.Кіно|Кіно\\.|Фільм|\\.Фільм|Фільм\\.|\\.Фільм\\.|" +
                     "жерти|\\.жерти|жерти\\.|\\.жерти\\.|\\.+Поїсти\\.|Поїсти|\\.+Поїсти|Поїсти+\\.|\\.+Їсти|\\.+Їсти+\\.|Їсти+\\.|Їсти|" +
-                    "\\.Жерти|Жерти\\.|\\.Жерти\\.|Ближчі|\\.Ближ|Ближ\\.|\\.Ближ\\.";
+                    "\\.Жерти|Жерти\\.|\\.Жерти\\.|Ближчі|\\.Ближ|Ближ\\.|\\.Ближ\\.|\\.+театр\\.|театр|\\.+театр|театр+\\.|вистава" +
+                    "|Курбаса|Ляльковий|І люди, і ляльки|Заньковецька|Оперний|";
             Pattern pattern = Pattern.compile(p);
             Matcher m = pattern.matcher(update.getMessage().getText());
 
@@ -115,6 +145,7 @@ public class Bot extends TelegramLongPollingBot {
             ListOf lst = new ListOf();
             Food fd = new Food();
             Cinema cnm = new Cinema();
+            Theatres thr = new Theatres();
 
 
             if (m.find()) {
@@ -124,6 +155,7 @@ public class Bot extends TelegramLongPollingBot {
                 lst.listCommand(update);
                 fd.foodCommand(update);
                 cnm.cinemaCommand(update);
+                thr.theatreCommand(update);
 
 
 
@@ -192,5 +224,12 @@ public class Bot extends TelegramLongPollingBot {
 
     }
 
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
 
 }
