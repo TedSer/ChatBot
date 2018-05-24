@@ -28,7 +28,8 @@ public class Cinema extends Bot {
     public void cinemaCommand(Update update) {
         Message msg = update.getMessage();
         String txt = msg.getText();
-        Pattern p = Pattern.compile("\\.+\\sкіно\\s+\\.|кіно|\\.+\\sкіно|кіно\\s+\\.|фільм");
+        Pattern p = Pattern.compile("\\.+\\sкіно\\s+\\.|кіно|\\.+\\sкіно|кіно\\s+\\.|фільм|\\.фільм|фільм\\.|\\.фільм\\.|" +
+                "\\.+\\sКіно\\s+\\.|Кіно|\\.+\\sКіно|Кіно\\s+\\.|Фільм|\\.Фільм|Фільм\\.|\\.Фільм\\.|\\.Жерти|Жерти\\.|\\.Жерти\\.");
         Matcher m = p.matcher(txt);
         ParceKinopalaceButtons parceKinopalaceButtons = new ParceKinopalaceButtons();
         ParcePlanetaButtons parcePlanetaButtons = new ParcePlanetaButtons();
@@ -96,6 +97,8 @@ public class Cinema extends Bot {
                 e.printStackTrace();
             }
         }
+
+
 
         if (txt.equals("Планета кіно")) {
 

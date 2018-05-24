@@ -21,6 +21,8 @@ import static java.lang.Math.toIntExact;
 
 public class ParceKinopalaceButtons extends Bot {
 
+    public int pages = 0;
+
     public void button(Update update) throws IOException {
 
       //  if (update.hasMessage() && update.getMessage().hasText()) {
@@ -76,7 +78,7 @@ public class ParceKinopalaceButtons extends Bot {
             Elements aElements = docMultiplex.getElementsByAttributeValue("class", "poster-title");
 
 
-            for (Element aElement : aElements.subList(0, 5)) {
+            for (Element aElement : aElements.subList(0, 6)) {
                 Element cElement = aElement.child(0);
                 String urlMultiplex = cElement.attr("href");
                 String titleMultiplex = cElement.text();
@@ -112,11 +114,12 @@ public class ParceKinopalaceButtons extends Bot {
 
 
 
+
         Document docMultiplex = Jsoup.connect("http://kinopalace.lviv.ua").get();
         Elements aElements = docMultiplex.getElementsByAttributeValue("class", "poster-title");
 
 
-        for (Element aElement : aElements.subList(6, 15)) {
+        for (Element aElement : aElements.subList(7, 15)) {
 
                 Element cElement = aElement.child(0);
                 String urlMultiplex = cElement.attr("href");
@@ -129,7 +132,7 @@ public class ParceKinopalaceButtons extends Bot {
                 InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
                 List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
                 List<InlineKeyboardButton> rowInline = new ArrayList<>();
-                rowInline.add(new InlineKeyboardButton().setText(titleMultiplex).setUrl(urlMultiplex).setCallbackData("moreFood"));
+                rowInline.add(new InlineKeyboardButton().setText(titleMultiplex).setUrl(urlMultiplex));
                 rowsInline.add(rowInline);
                 markupInline.setKeyboard(rowsInline);
                 message.setReplyMarkup(markupInline);
@@ -139,8 +142,28 @@ public class ParceKinopalaceButtons extends Bot {
                     e.printStackTrace();
                 }
 
+
             }
 
+        long chat_id = update.getCallbackQuery().getMessage().getChatId();
+        SendMessage message_for_key = new SendMessage() // Create a message object object
+                .setChatId(chat_id)
+                .setText("--------");
+        InlineKeyboardMarkup markupInline2 = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline2 = new ArrayList<>();
+        List<InlineKeyboardButton> rowInline2 = new ArrayList<>();
+
+        rowInline2.add(new InlineKeyboardButton().setText("Ще").setCallbackData("morePalace"));
+        // Set the keyboard to the markup
+        rowsInline2.add(rowInline2);
+        // Add it to the message
+        markupInline2.setKeyboard(rowsInline2);
+        message_for_key.setReplyMarkup(markupInline2);
+        try {
+            execute(message_for_key); // Sending our message object to user
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
 
         }
 

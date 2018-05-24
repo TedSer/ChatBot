@@ -2,7 +2,9 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.io.IOException;
@@ -17,13 +19,14 @@ public class Food extends Bot {
         Message msg = update.getMessage();
         String txt = msg.getText();
         Pattern p = Pattern.compile("\\.+поїсти\\.|поїсти|\\.+поїсти|поїсти+\\.|\\.+їсти|\\.+їсти+\\.|їсти+\\.|їсти|" +
-                "\\.жерти|жерти\\.|\\.жерти\\.");
+                "жерти|\\.жерти|жерти\\.|\\.жерти\\.|\\.+Поїсти\\.|Поїсти|\\.+Поїсти|Поїсти+\\.|\\.+Їсти|\\.+Їсти+\\.|Їсти+\\.|Їсти|" +
+                "\\.Жерти|Жерти\\.|\\.Жерти\\.");
         Matcher m = p.matcher(txt);
 
-        Pattern pForClose = Pattern.compile("ближчі|\\.ближ|ближ\\.|\\.ближ\\.");
+        Pattern pForClose = Pattern.compile("ближчі|\\.ближ|ближ\\.|\\.ближ\\.|Ближчі|\\.Ближ|Ближ\\.|\\.Ближ\\.");
         Matcher mForClose = pForClose.matcher(txt);
 
-        Pattern pForBest = Pattern.compile("найкращі|\\.найкр|найкр\\.|\\.найкр\\.");
+        Pattern pForBest = Pattern.compile("найкращі|\\.найкр|найкр\\.|\\.найкр\\.|Найкращі|\\.Найкр|Найкр\\.|\\.Найкр\\.");
         Matcher mForBest = pForBest.matcher(txt);
 
         FoodParce foodParce = new FoodParce();
@@ -35,12 +38,27 @@ public class Food extends Bot {
         }
 
         if (mForClose.find()){
-            try {
-                foodParce.foodInSykhiv(update);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            SendMessage message = new SendMessage()
+                    .setChatId(msg.getChatId())
+                    .setText("Виберіть район");
 
+
+            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+            List<KeyboardRow> keyboard = new ArrayList<>();
+            KeyboardRow row = new KeyboardRow();
+            row.add("Сихівський район");//ПРОПИСУЙТЕ ТУТ НАЗВИ КНОПОК РАЙОНІВ
+            row.add("Шевченківський район");
+            row.add("Личаківський район");
+            row.add("Залізничний район");
+            keyboard.add(row);
+            keyboardMarkup.setKeyboard(keyboard);
+            message.setReplyMarkup(keyboardMarkup);
+
+            try {
+                execute(message);
+            } catch (TelegramApiException e2) {
+                e2.printStackTrace();
+            }
         }
 
         if (mForBest.find()){

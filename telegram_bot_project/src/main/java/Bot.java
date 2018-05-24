@@ -22,6 +22,15 @@ import static java.lang.Math.toIntExact;
 public class Bot extends TelegramLongPollingBot {
 
 
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public int pages;
 
 
     @Override
@@ -37,6 +46,8 @@ public class Bot extends TelegramLongPollingBot {
 //                }
 //
 //            }
+
+
 
 // ВИРІШЕННЯ ЕКСЕПШИНУ!!!
         if (update.getMessage() == null) {   //місце для прописування методів колбеку кнопок, інакши викидає NPE
@@ -61,6 +72,8 @@ public class Bot extends TelegramLongPollingBot {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+
                 }
 
                 if (call_data.equals("morePlaneta")) {
@@ -70,6 +83,7 @@ public class Bot extends TelegramLongPollingBot {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                 }
 
                 if (call_data.equals("moreFood")) {
@@ -90,7 +104,9 @@ public class Bot extends TelegramLongPollingBot {
                     "\\.|\\.+їсти|\\.+їсти+\\.|їсти+\\.|їсти|Привіт|привіт|\\.+привіт|\\.+привіт+\\.|привіт\\.|Привіт\\.|" +
                     "Multiplex|Кінопалац|Multiplex Кульпарківська 226 А|Копернік|Театртальна|ім. Довженка|/start|update_msg_text|" +
                     "Update message text|Планета кіно|ще|ближчі|\\.ближ|ближ\\.|\\.ближ\\.|найкращі|\\.найкр|найкр\\." +
-                    "|\\.найкр\\.|я задовбався";
+                    "|\\.найкр\\.|я задовбався|\\.Кіно\\.|Кіно|\\.Кіно|Кіно\\.|Фільм|\\.Фільм|Фільм\\.|\\.Фільм\\.|" +
+                    "жерти|\\.жерти|жерти\\.|\\.жерти\\.|\\.+Поїсти\\.|Поїсти|\\.+Поїсти|Поїсти+\\.|\\.+Їсти|\\.+Їсти+\\.|Їсти+\\.|Їсти|" +
+                    "\\.Жерти|Жерти\\.|\\.Жерти\\.|Ближчі|\\.Ближ|Ближ\\.|\\.Ближ\\.";
             Pattern pattern = Pattern.compile(p);
             Matcher m = pattern.matcher(update.getMessage().getText());
 
@@ -99,7 +115,6 @@ public class Bot extends TelegramLongPollingBot {
             ListOf lst = new ListOf();
             Food fd = new Food();
             Cinema cnm = new Cinema();
-            ParceKinopalaceButtons parceKinopalaceButtons = new ParceKinopalaceButtons();
 
 
             if (m.find()) {
